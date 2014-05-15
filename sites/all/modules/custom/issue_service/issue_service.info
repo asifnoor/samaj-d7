@@ -1,0 +1,8 @@
+name = Issue Service
+description = Custom Services for the Issue content type.
+package = Issue Services 
+dependencies[] = services
+files[] = issue_service.inc
+files[] = issue_service.module
+core = 7.x
+

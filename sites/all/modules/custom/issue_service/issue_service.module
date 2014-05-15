@@ -1,0 +1,38 @@
+<?php
+// issue_service.module
+/** Gets latest issues.
+*
+* @param int $qty
+* @return object
+*/
+function issue_service_get_latest_issues($qty = 3) {
+  return db_query("SELECT * FROM {node} WHERE type='issue' limit ".$qty."")->fetchAll();
+}
+
+/**
+* Implementation of hook_services_services().
+*/
+function issue_service_services_services() {
+  return array(
+    'issue' => array(
+      'retrieve' => array(
+        'help' => 'Retrieves latest issue',
+        'file' => array('file' => 'inc', 'module' => 'issue_service'),
+        'callback' => '_issue_service_latest',
+        'access callback' => '_issue_service_access',
+        'access arguments' => array('view'),
+        'access arguments append' => TRUE,
+        'args' => array(
+          array(
+            'name' => 'qty',
+            'type' => 'int',
+            'description' => 'The number of the services to get',
+            'source' => array('path' => '0'),
+            'optional' => FALSE,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+?>
